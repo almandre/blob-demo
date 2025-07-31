@@ -1,4 +1,4 @@
-namespace CosmosChangeFeed.Configuration
+namespace BlobDemo.Configuration
 {
     public class BlobStorageSettings
     {
