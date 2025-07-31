@@ -1,8 +1,16 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Microsoft.Extensions.Configuration;
+using CosmosChangeFeed.Configuration;
 
-string storageConnectionString = "";
-var blobServiceClient = new BlobServiceClient(storageConnectionString);
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+var blobStorageSettings = new BlobStorageSettings();
+configuration.GetSection("BlobStorage").Bind(blobStorageSettings);
+
+var blobServiceClient = new BlobServiceClient(blobStorageSettings.ConnectionString);
 
 string containerName = "quickstartblobs" + Guid.NewGuid().ToString();
 
